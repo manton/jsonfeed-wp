@@ -1,11 +1,12 @@
 <?php
-header('Content-Type: application/json; charset=' . get_option('blog_charset'), true);
+header('Content-Type: application/json; charset=' . get_option('blog_charset'));
+header('Cache-Control: no-cache'); // prevent caching plugins from serving our feed with an incorrect MIME type
 
 $feed_items = array();
 $limitCount = 0;
 while (have_posts()) : the_post();
 	$item = array(
-		"id" => get_permalink(), // (string)get_the_ID(),
+		"id" => get_permalink(),
 		"url" => get_permalink(),
 		"title" => get_the_title(),
 		"content_html" => get_the_content(),

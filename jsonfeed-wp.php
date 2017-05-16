@@ -37,7 +37,7 @@ function json_feed_content_type( $content_type, $type ) {
 
 function generateJSONFeed()
 {
-   load_template( dirname( __FILE__ ) . '/feed-template.php' );
+	load_template( dirname( __FILE__ ) . '/feed-template.php' );
 }
 
 function json_feed_link()
