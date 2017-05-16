@@ -11,6 +11,9 @@ while (have_posts()) : the_post();
 		"content_html" => get_the_content(),
 		"date_published" => get_the_date("c"),
 		"date_modified" => get_the_modified_date("c"),
+		"author" => array(
+			"name" => get_the_author()
+		)
 	);
 
 	array_push($feed_items, $item);
