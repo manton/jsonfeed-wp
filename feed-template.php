@@ -1,6 +1,5 @@
 <?php
 header('Content-Type: application/json; charset=' . get_option('blog_charset'));
-header('Cache-Control: no-cache'); // prevent caching plugins from serving our feed with an incorrect MIME type
 
 $feed_items = array();
 $limitCount = 0;
@@ -10,7 +9,8 @@ while (have_posts()) : the_post();
 		"url" => get_permalink(),
 		"title" => get_the_title(),
 		"content_html" => get_the_content(),
-		"date_published" => get_the_date("c")
+		"date_published" => get_the_date("c"),
+		"date_modified" => get_the_modified_date("c"),
 	);
 
 	array_push($feed_items, $item);
@@ -21,6 +21,7 @@ endwhile;
 $feed_json = array(
 	"version" => "http://jsonfeed.org/version/1",
 	"home_page_url" => get_home_url(),
+	"feed_url" => get_feed_link("json"),
 	"title" => get_bloginfo("name"),
 	"description" => get_bloginfo("description"),
 	"items" => $feed_items
