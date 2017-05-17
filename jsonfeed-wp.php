@@ -7,6 +7,7 @@ Plugin Name:  JSON Feed (jsonfeed.org)
 Version:      1.0
 Description:  Adds a feed of recent posts in JSON Feed format.
 Author:       Manton Reece and Daniel Jalkut
+License:      MIT
 
 **************************************************************************/
 
