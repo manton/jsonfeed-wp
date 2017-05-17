@@ -8,7 +8,7 @@ while (have_posts()) : the_post();
 		"id" => get_permalink(),
 		"url" => get_permalink(),
 		"title" => get_the_title(),
-		"content_html" => get_the_content(),
+		"content_html" => get_the_content_feed('json'),
 		"date_published" => get_the_date("c"),
 		"date_modified" => get_the_modified_date("c"),
 		"author" => array(
