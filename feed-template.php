@@ -1,5 +1,4 @@
 <?php
-header('Content-Type: application/json; charset=' . get_option('blog_charset'));
 
 $feed_items = array();
 $limitCount = 0;
