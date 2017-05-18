@@ -11,41 +11,34 @@ License:      MIT
 
 **************************************************************************/
 
-add_action('init', 'setup_feed_rewrite');
-add_filter('feed_content_type', 'json_feed_content_type', 10, 2);
-
-// I don't know if there is a cleaner way to add this. There is a hook 
-// feed_links_show_posts_feed, but that only controls where the main RSS 
-// feed is shown or not.
-add_action('wp_head', 'json_feed_link');
-
-function setup_feed_rewrite()
-{
-    // Register our function as the feed generator for the /feed/json URL
-    add_feed('json', 'generateJSONFeed');
-
-    // Have to do this to get the new rewrite rule into WP's DB
-    global $wp_rewrite;
-    $wp_rewrite->flush_rules();
+// Flush the rewrite rules to enable the json feed permalink
+register_activation_hook( __FILE__, 'json_feed_setup_rewrite' );
+function json_feed_setup_rewrite() {
+	json_feed_setup_feed();
+	flush_rewrite_rules();
 }
 
+// Register the json feed rewrite rules
+add_action( 'init', 'json_feed_setup_feed' );
+function json_feed_setup_feed() {
+	add_feed( 'json', 'json_feed_render_feed' );
+}
+function json_feed_render_feed() {
+	load_template( dirname( __FILE__ ) . '/feed-template.php' );
+}
+
+add_filter( 'feed_content_type', 'json_feed_content_type', 10, 2 );
 function json_feed_content_type( $content_type, $type ) {
-	if ('json' === $type) {
+	if ( 'json' === $type ) {
 		return 'application/json';
 	}
 	return $content_type;
 }
 
-function generateJSONFeed()
-{
-	load_template( dirname( __FILE__ ) . '/feed-template.php' );
+add_action( 'wp_head', 'json_feed_link' );
+function json_feed_link() {
+	printf(
+		'<link rel="alternate" type="application/json" title="JSON Feed" href="%s" />',
+		esc_url( get_feed_link( 'json' ) )
+	);
 }
-
-function json_feed_link()
-{
-   echo '<link rel="alternate" type="application/json" title="JSON Feed" href="' . esc_url( get_feed_link('json') ) . "\" />\n";
-
-   return false;
-}
-
-?>
