@@ -1,6 +1,4 @@
 <?php
-header('Content-Type: application/json; charset=' . get_option('blog_charset'));
-
 $feed_items = array();
 $limitCount = 0;
 while (have_posts()) : the_post();
@@ -32,4 +30,3 @@ $feed_json = array(
 );
 
 echo json_encode($feed_json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
-?>
