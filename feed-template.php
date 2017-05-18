@@ -1,12 +1,11 @@
 <?php
 
 $feed_items = array();
-$limitCount = 0;
-while (have_posts()) : the_post();
-	$item = array(
-	);
 
-	array_push($feed_items, $item);
+while ( have_posts() ) {
+	the_post();
+
+	$feed_item = array(
 		'id' => get_permalink(),
 		'url' => get_permalink(),
 		'title' => get_the_title(),
@@ -16,9 +15,10 @@ while (have_posts()) : the_post();
 		'author' => array(
 			'name' => get_the_author()
 		),
+	);
 
-	if (--$limitCount == 0) break;
-endwhile;
+	$feed_items[] = apply_filters( 'json_feed_item', $feed_item, get_post() );
+}
 
 $feed_json = array(
 	'version' => 'http://jsonfeed.org/version/1',
@@ -30,5 +30,6 @@ $feed_json = array(
 	'items' => $feed_items
 );
 
-echo json_encode($feed_json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
-?>
+$feed_json = apply_filters( 'json_feed_feed', $feed_json );
+
+echo wp_json_encode( $feed_json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
