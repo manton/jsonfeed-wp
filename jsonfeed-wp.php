@@ -12,7 +12,6 @@ License:      MIT
 **************************************************************************/
 
 add_action('init', 'setup_feed_rewrite');
-add_filter('feed_content_type', 'json_feed_content_type', 10, 2);
 
 function setup_feed_rewrite()
 {
@@ -24,6 +23,7 @@ function setup_feed_rewrite()
     $wp_rewrite->flush_rules();
 }
 
+add_filter( 'feed_content_type', 'json_feed_content_type', 10, 2 );
 function json_feed_content_type( $content_type, $type ) {
 	if ( 'json' === $type ) {
 		return 'application/json';
