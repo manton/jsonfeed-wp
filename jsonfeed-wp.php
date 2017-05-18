@@ -14,6 +14,7 @@ License:      MIT
 // Flush the rewrite rules to enable the json feed permalink
 register_activation_hook( __FILE__, 'json_feed_setup_rewrite' );
 function json_feed_setup_rewrite() {
+	json_feed_setup_feed();
 	flush_rewrite_rules();
 }
 
