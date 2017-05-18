@@ -32,4 +32,3 @@ $feed_json = array(
 );
 
 echo json_encode($feed_json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
-?>
