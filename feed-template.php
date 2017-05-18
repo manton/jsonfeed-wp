@@ -16,6 +16,18 @@ while (have_posts()) : the_post();
 		)
 	);
 
+	if(function_exists('is_linked_list')){
+		$linked_list_url = get_post_meta(get_the_ID(), 'linked_list_url', true);
+		if(!empty($linked_list_url)){
+			$insert = array_search('title', array_keys($item));
+			$item = array_merge(
+			        array_slice($item, 0, $insert),
+			        array('external_url' => $linked_list_url),
+			        array_slice($item, $insert, null)
+			    );
+		}
+	}
+
 	array_push($feed_items, $item);
 
 	if (--$limitCount == 0) break;
