@@ -25,7 +25,7 @@ function setup_feed_rewrite()
 }
 
 function json_feed_content_type( $content_type, $type ) {
-	if ('json' === $type) {
+	if ( 'json' === $type ) {
 		return 'application/json';
 	}
 	return $content_type;
