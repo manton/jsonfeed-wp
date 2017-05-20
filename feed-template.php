@@ -9,11 +9,11 @@ while ( have_posts() ) {
 		'id' => get_permalink(),
 		'url' => get_permalink(),
 		'title' => get_the_title(),
-		'content_html' => get_the_content_feed('json'),
-		'date_published' => get_the_date('c'),
-		'date_modified' => get_the_modified_date('c'),
+		'content_html' => get_the_content_feed( 'json' ),
+		'date_published' => get_the_date( 'c' ),
+		'date_modified' => get_the_modified_date( 'c' ),
 		'author' => array(
-			'name' => get_the_author()
+			'name' => get_the_author(),
 		),
 	);
 
@@ -22,12 +22,12 @@ while ( have_posts() ) {
 
 $feed_json = array(
 	'version' => 'https://jsonfeed.org/version/1',
-	'user_comment' => 'This feed allows you to read the posts from this site in any feed reader that supports the JSON Feed format. To add this feed to your reader, copy the following URL -- ' . get_feed_link('json') . ' -- and add it your reader.',
+	'user_comment' => 'This feed allows you to read the posts from this site in any feed reader that supports the JSON Feed format. To add this feed to your reader, copy the following URL -- ' . get_feed_link( 'json' ) . ' -- and add it your reader.',
 	'home_page_url' => get_home_url(),
-	'feed_url' => get_feed_link('json'),
-	'title' => get_bloginfo('name'),
-	'description' => get_bloginfo('description'),
-	'items' => $feed_items
+	'feed_url' => get_feed_link( 'json' ),
+	'title' => get_bloginfo( 'name' ),
+	'description' => get_bloginfo( 'description' ),
+	'items' => $feed_items,
 );
 
 $feed_json = apply_filters( 'json_feed_feed', $feed_json );
