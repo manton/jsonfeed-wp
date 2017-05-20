@@ -1,7 +1,7 @@
 === Plugin Name ===
 JSON Feed (jsonfeed.org)
 
-Contributors: mantonr
+Contributors: mantonr, redsweater
 Plugin Name: JSON Feed (jsonfeed.org)
 Plugin URI: https://github.com/manton/jsonfeed-wp
 Tags: json, feed, feeds
