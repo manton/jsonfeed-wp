@@ -42,3 +42,9 @@ function json_feed_link() {
 		esc_url( get_feed_link( 'json' ) )
 	);
 }
+
+add_filter( 'pubsubhubbub_feed_urls', 'json_feed_websub' );
+function json_feed_websub( $feeds, $post_id ) {
+	$feeds[] = get_feed_link( 'json' );
+	return $feeds;
+}
