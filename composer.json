@@ -12,5 +12,8 @@
           "name": "Manton Reece",
           "homepage": "http://www.manton.org/"
         }
-    ]
+    ],
+    "extra": {
+        "installer-name": "jsonfeed"
+    }
 }
