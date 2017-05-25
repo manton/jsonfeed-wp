@@ -2,8 +2,8 @@
 Contributors: mantonr, redsweater
 Plugin Name: JSON Feed (jsonfeed.org)
 Plugin URI: https://github.com/manton/jsonfeed-wp
-Tags: json, feed, feeds
-Version: 1.0
+Tags: jsonfeed, json, feed, feeds
+Version: 1.1.1
 Requires at least: 4.0
 Tested up to: 4.7.5
 Stable tag: trunk

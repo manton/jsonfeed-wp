@@ -1,15 +1,15 @@
 <?php
+/*
+Plugin Name: JSON Feed (jsonfeed.org)
+Plugin URI: http://jsonfeed.org
+Description: Adds a feed of recent posts in JSON Feed format.
+Version: 1.1.1
+Author: Manton Reece and Daniel Jalkut
+Text Domain: jsonfeed
+License: MIT
+*/
+
 defined( 'ABSPATH' ) or die( "WordPress plugin can't be loaded directly." );
-
-/**************************************************************************
-
-Plugin Name:  JSON Feed (jsonfeed.org)
-Version:      1.0
-Description:  Adds a feed of recent posts in JSON Feed format.
-Author:       Manton Reece and Daniel Jalkut
-License:      MIT
-
-**************************************************************************/
 
 // Flush the rewrite rules to enable the json feed permalink
 register_activation_hook( __FILE__, 'json_feed_setup_rewrite' );
