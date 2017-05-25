@@ -1,9 +1,10 @@
 <?php
 
-// Copied from https://developer.wordpress.org/reference/functions/self_link/
-// Sinc the function there echos instead of returning, it can't be used here.
-$host = @parse_url(home_url());
-$self_link = esc_url( apply_filters( 'self_link', set_url_scheme( 'http://' . $host['host'] . wp_unslash( $_SERVER['REQUEST_URI'] ) ) ) );
+//via http://www.tequilafish.com/2009/02/10/php-how-to-capture-output-of-echo-into-a-local-variable/
+ob_start();
+self_link();
+$self_link = ob_get_contents();
+ob_end_clean();
 
 $feed_items = array();
 
