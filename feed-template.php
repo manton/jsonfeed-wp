@@ -1,5 +1,11 @@
 <?php
 
+//via http://www.tequilafish.com/2009/02/10/php-how-to-capture-output-of-echo-into-a-local-variable/
+ob_start();
+self_link();
+$self_link = ob_get_contents();
+ob_end_clean();
+
 $feed_items = array();
 
 while ( have_posts() ) {
@@ -22,9 +28,9 @@ while ( have_posts() ) {
 
 $feed_json = array(
 	'version' => 'https://jsonfeed.org/version/1',
-	'user_comment' => 'This feed allows you to read the posts from this site in any feed reader that supports the JSON Feed format. To add this feed to your reader, copy the following URL -- ' . get_feed_link( 'json' ) . ' -- and add it your reader.',
+	'user_comment' => 'This feed allows you to read the posts from this site in any feed reader that supports the JSON Feed format. To add this feed to your reader, copy the following URL -- ' . $self_link . ' -- and add it your reader.',
 	'home_page_url' => get_home_url(),
-	'feed_url' => get_feed_link( 'json' ),
+	'feed_url' => $self_link,
 	'title' => get_bloginfo( 'name' ),
 	'description' => get_bloginfo( 'description' ),
 	'items' => $feed_items,
