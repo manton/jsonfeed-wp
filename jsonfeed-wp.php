@@ -6,7 +6,7 @@ Description: Adds a feed of recent posts in JSON Feed format.
 Version: 1.1.1
 Author: Manton Reece and Daniel Jalkut
 Text Domain: jsonfeed
-License: MIT
+License: GPL2+
 */
 
 defined( 'ABSPATH' ) or die( "WordPress plugin can't be loaded directly." );

@@ -6,6 +6,29 @@ self_link();
 $self_link = ob_get_contents();
 ob_end_clean();
 
+function get_attachment_json_info() {
+	if ( post_password_required() )
+		return null;
+
+	foreach ( (array) get_post_custom() as $key => $val ) {
+		if ($key == 'enclosure') {
+			foreach ( (array) $val as $enc ) {
+				$enclosure = explode("\n", $enc);
+
+				// only get the first element, e.g. audio/mpeg from 'audio/mpeg mpga mp2 mp3'
+				$t = preg_split('/[ \t]/', trim($enclosure[2]) );
+				$type = $t[0];
+
+				return array(
+					'url' => trim( $enclosure[0] ),
+					'mime_type' => $type,
+					'size_in_bytes' => (int)$enclosure[1]
+				);
+			}
+		}
+	}
+}
+
 $feed_items = array();
 
 while ( have_posts() ) {
@@ -22,6 +45,13 @@ while ( have_posts() ) {
 			'name' => get_the_author(),
 		),
 	);
+	
+	$attachment = get_attachment_json_info();
+	if ( $attachment != null ) {
+		$feed_item["attachments"] = array(
+			$attachment
+		);
+	}
 
 	$feed_items[] = apply_filters( 'json_feed_item', $feed_item, get_post() );
 }
