@@ -39,8 +39,8 @@ while ( have_posts() ) {
 		'url' => get_permalink(),
 		'title' => get_the_title(),
 		'content_html' => get_the_content_feed( 'json' ),
-		'date_published' => get_the_date( 'c' ),
-		'date_modified' => get_the_modified_date( 'c' ),
+		'date_published' => get_gmt_from_date( get_the_date( 'Y-m-d H:i:s' ), 'c' ),
+		'date_modified' => get_gmt_from_date( get_the_modified_date( 'Y-m-d H:i:s' ), 'c' ),
 		'author' => array(
 			'name' => get_the_author(),
 		),
