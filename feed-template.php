@@ -37,7 +37,7 @@ while ( have_posts() ) {
 	$feed_item = array(
 		'id' => get_permalink(),
 		'url' => get_permalink(),
-		'title' => get_the_title(),
+		'title' => html_entity_decode(get_the_title()),
 		'content_html' => get_the_content_feed( 'json' ),
 		'date_published' => get_gmt_from_date( get_the_date( 'Y-m-d H:i:s' ), 'c' ),
 		'date_modified' => get_gmt_from_date( get_the_modified_date( 'Y-m-d H:i:s' ), 'c' ),
