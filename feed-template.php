@@ -44,7 +44,11 @@ while ( have_posts() ) {
 		'author' => array(
 			'name' => get_the_author(),
 		),
+		'image' => get_the_post_thumbnail_url(),
+		'category' => get_the_category(),
+		
 	);
+	
 	
 	$attachment = get_attachment_json_info();
 	if ( $attachment != null ) {
