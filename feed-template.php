@@ -43,6 +43,8 @@ while ( have_posts() ) {
 		'date_modified' => get_gmt_from_date( get_the_modified_date( 'Y-m-d H:i:s' ), 'c' ),
 		'author' => array(
 			'name' => get_the_author(),
+			'url' => get_author_posts_url( get_the_author_meta( 'ID' ) ),
+			'avatar' => get_avatar_url( get_the_author_meta( 'ID' ), array( 'size' => 512 ) )
 		),
 	);
 	
