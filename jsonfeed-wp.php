@@ -38,7 +38,8 @@ function json_feed_content_type( $content_type, $type ) {
 add_action( 'wp_head', 'json_feed_link' );
 function json_feed_link() {
 	printf(
-		'<link rel="alternate" type="application/json" title="JSON Feed" href="%s" />',
+		'<link rel="alternate" type="application/json" title="%s &raquo; JSON Feed" href="%s" />',
+		get_bloginfo( $show = 'name' ),
 		esc_url( get_feed_link( 'json' ) )
 	);
 }
