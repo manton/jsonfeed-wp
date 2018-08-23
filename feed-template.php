@@ -33,6 +33,10 @@ $feed_items = array();
 
 while ( have_posts() ) {
 	the_post();
+	
+	$tags = array_map(function($tag) {
+		return $tag->name;
+	}, get_tags());
 
 	$feed_item = array(
 		'id' => get_permalink(),
@@ -46,6 +50,7 @@ while ( have_posts() ) {
 			'url' => get_author_posts_url( get_the_author_meta( 'ID' ) ),
 			'avatar' => get_avatar_url( get_the_author_meta( 'ID' ), array( 'size' => 512 ) )
 		),
+		'tags' => $tags
 	);
 	
 	$attachment = get_attachment_json_info();
