@@ -1,10 +1,11 @@
 <?php
 
-//via http://www.tequilafish.com/2009/02/10/php-how-to-capture-output-of-echo-into-a-local-variable/
-ob_start();
-self_link();
-$self_link = ob_get_contents();
-ob_end_clean();
+
+// Reproduction of self_link with a return and without URL escaping
+function get_json_self_link() {
+	$host = @wp_parse_url( home_url() );
+	return apply_filters( 'self_link', set_url_scheme( 'http://' . $host['host'] . wp_unslash( $_SERVER['REQUEST_URI'] ) ) );
+}
 
 function get_attachment_json_info() {
 	if ( post_password_required() )
@@ -27,6 +28,22 @@ function get_attachment_json_info() {
 			}
 		}
 	}
+}
+
+function get_link_from_json_feed( $link ) {
+	global $wp_rewrite;
+	$arg = $wp_rewrite->get_feed_permastruct();
+	// If empty this site does not have pretty permalinks enabled
+	if ( empty( $arg ) ) {
+		wp_parse_str( wp_parse_url( $link, PHP_URL_QUERY ), $query_args );
+		unset( $query_args['feed'] );
+		return add_query_arg( $query_args, home_url( '/' ) );
+	} else { 
+		$arg = str_replace( '%feed%', 'json', $arg );
+		$arg = preg_replace('#/+#', '/', "/$arg");
+		$link = str_replace( $arg, '', $link );
+	}
+	return $link;
 }
 
 $feed_items = array();
@@ -60,9 +77,9 @@ while ( have_posts() ) {
 
 $feed_json = array(
 	'version' => 'https://jsonfeed.org/version/1',
-	'user_comment' => 'This feed allows you to read the posts from this site in any feed reader that supports the JSON Feed format. To add this feed to your reader, copy the following URL -- ' . $self_link . ' -- and add it your reader.',
-	'home_page_url' => get_home_url(),
-	'feed_url' => $self_link,
+	'user_comment' => 'This feed allows you to read the posts from this site in any feed reader that supports the JSON Feed format. To add this feed to your reader, copy the following URL -- ' . get_json_self_link() . ' -- and add it your reader.',
+	'home_page_url' => get_link_from_json_feed( get_json_self_link() ),
+	'feed_url' => get_json_self_link(),
 	'title' => get_bloginfo( 'name' ),
 	'description' => get_bloginfo( 'description' ),
 	'items' => $feed_items,
