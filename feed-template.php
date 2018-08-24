@@ -86,6 +86,13 @@ $feed_json = array(
 	'items'         => $feed_items,
 );
 
+$icon = get_site_icon_url();
+
+// Only add icon if icon is set
+if ( $icon ) {
+	$feed_json['icon'] = $icon;
+}
+
 $feed_json = apply_filters( 'json_feed_feed', $feed_json );
 
 // The JSON_PRETTY_PRINT and JSON_UNESCAPED slashes make the minimum version requirement on this PHP5.4
