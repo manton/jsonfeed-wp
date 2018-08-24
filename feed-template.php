@@ -65,7 +65,7 @@ while ( have_posts() ) {
 			'url'    => get_author_posts_url( get_the_author_meta( 'ID' ) ),
 			'avatar' => get_avatar_url( get_the_author_meta( 'ID' ), array( 'size' => 512 ) ),
 		),
-		'image' => get_the_post_thumbnail_url( null, 'full' )
+		'image'          => get_the_post_thumbnail_url( null, 'full' ), // If there is a set featured image
 	);
 	// Only add custom excerpts not generated ones
 	if ( has_excerpt() ) {
