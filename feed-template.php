@@ -57,6 +57,7 @@ while ( have_posts() ) {
 		'url'            => get_permalink(),
 		'title'          => html_entity_decode( get_the_title() ),
 		'content_html'   => get_the_content_feed( 'json' ),
+		'content_text'   => wp_strip_all_tags( get_the_content_feed( 'json' ) ),
 		'date_published' => get_the_date( 'Y-m-d\TH:i:sP' ),
 		'date_modified'  => get_the_modified_date( 'Y-m-d\TH:i:sP' ),
 		'author'         => array(
@@ -64,7 +65,14 @@ while ( have_posts() ) {
 			'url'    => get_author_posts_url( get_the_author_meta( 'ID' ) ),
 			'avatar' => get_avatar_url( get_the_author_meta( 'ID' ), array( 'size' => 512 ) ),
 		),
+		'image' => get_the_post_thumbnail_url( null, 'full' )
 	);
+	// Only add custom excerpts not generated ones
+	if ( has_excerpt() ) {
+		$feed_item['summary'] = get_the_excerpt();
+	}
+	// If anything is an empty string or null then remove it
+	$feed_item = array_filter( $feed_item );
 
 	$attachment = get_attachment_json_info();
 	if ( null !== $attachment ) {
