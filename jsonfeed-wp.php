@@ -3,7 +3,7 @@
 Plugin Name: JSON Feed
 Plugin URI: https://github.com/manton/jsonfeed-wp/
 Description: Adds a feed of recent posts in JSON Feed format.
-Version: 1.1.2
+Version: 1.2.0
 Author: Manton Reece and Daniel Jalkut
 Text Domain: jsonfeed
 License: GPL2.0+

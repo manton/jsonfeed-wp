@@ -4,7 +4,7 @@ Tags: jsonfeed, json, feed, feeds
 Requires at least: 4.0
 Tested up to: 4.9.8
 Requires PHP: 5.4
-Stable tag: 1.1.2
+Stable tag: 1.2.0
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,6 +29,15 @@ JSON Feed, a format similar to RSS and Atom but in JSON. JSON has become the dev
 JSON is simpler to read and write, and it’s less prone to bugs.
 
 == Changelog ==
+
+= 1.2.0 =
+* dshanske added as a contributor/maintainer
+* Add featured image if set
+* Add site icon if set
+* home_page_url now actually returns the correct URL instead of always returning the homepage of the site
+* Add avatar and URL to author
+* Include site name in feed name in the discovery title
+* Fix issue with timezone not reflecting on date
 
 = 1.1.2 =
 
