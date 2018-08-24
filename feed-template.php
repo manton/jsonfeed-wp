@@ -47,6 +47,22 @@ function get_link_from_json_feed( $link ) {
 	return $link;
 }
 
+function json_get_merged_tags( $post_id = null ) {
+	$post       = get_post( $post_id );
+	$tags       = get_the_terms( $post, 'post_tag' );
+	$categories = get_the_terms( $post, 'category' );
+	$tags       = is_array( $tags ) ? $tags : array();
+	$categories = is_array( $categories ) ? $categories : array();
+	// $tags = array_merge( $tags, $categories );
+	$return = array();
+	foreach ( $tags as $tag ) {
+		if ( 'uncategorized' !== $tag->slug ) {
+			$return[] = $tag->name;
+		}
+	}
+	return $return;
+}
+
 $feed_items = array();
 
 while ( have_posts() ) {
@@ -66,6 +82,7 @@ while ( have_posts() ) {
 			'avatar' => get_avatar_url( get_the_author_meta( 'ID' ), array( 'size' => 512 ) ),
 		),
 		'image'          => get_the_post_thumbnail_url( null, 'full' ), // If there is a set featured image
+		'tags'           => json_get_merged_tags(), // Tags is a merge of the category and the tags names
 	);
 	// Only add custom excerpts not generated ones
 	if ( has_excerpt() ) {
