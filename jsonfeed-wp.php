@@ -1,15 +1,16 @@
 <?php
 /*
-Plugin Name: JSON Feed (jsonfeed.org)
-Plugin URI: http://jsonfeed.org
+Plugin Name: JSON Feed
+Plugin URI: https://github.com/manton/jsonfeed-wp/
 Description: Adds a feed of recent posts in JSON Feed format.
 Version: 1.1.2
 Author: Manton Reece and Daniel Jalkut
 Text Domain: jsonfeed
-License: GPL2+
+License: GPL2.0+
+License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 */
 
-defined( 'ABSPATH' ) or die( "WordPress plugin can't be loaded directly." );
+defined( 'ABSPATH' ) || die( "WordPress plugin can't be loaded directly." );
 
 // Flush the rewrite rules to enable the json feed permalink
 register_activation_hook( __FILE__, 'json_feed_setup_rewrite' );
@@ -39,7 +40,7 @@ add_action( 'wp_head', 'json_feed_link' );
 function json_feed_link() {
 	printf(
 		'<link rel="alternate" type="application/json" title="%s &raquo; JSON Feed" href="%s" />',
-		get_bloginfo( $show = 'name' ),
+		esc_attr( get_bloginfo( 'name' ) ),
 		esc_url( get_feed_link( 'json' ) )
 	);
 }
