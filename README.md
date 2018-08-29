@@ -23,6 +23,17 @@ The JSON Feed format is a pragmatic syndication format, like RSS and Atom, but w
 JSON Feed, a format similar to RSS and Atom but in JSON. JSON has become the developers’ choice for APIs, and that developers will often go out of their way to avoid XML.
 JSON is simpler to read and write, and it’s less prone to bugs.
 
+### Can I add other fields to the feed?
+Yes you can! There is a filter, `json_feed_item`, that allows you to modify the items in the feed just before they're inserted into the feed itself. For example, if you want to add a link to a post author's archive page to the respective item in the feed, you can use the following code:
+
+```
+function wp_custom_json_feed_fields( $feed_item, $post ){
+	$feed_item['author']['archive_link'] = get_author_posts_url( $post->post_author );
+
+	return $feed_item;
+}
+add_filter( 'json_feed_item', 'wp_custom_json_feed_fields', 10, 2);
+```
 
 ## Changelog 
 
