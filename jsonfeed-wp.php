@@ -22,10 +22,15 @@ function json_feed_setup_rewrite() {
 // Register the json feed rewrite rules
 add_action( 'init', 'json_feed_setup_feed' );
 function json_feed_setup_feed() {
-	add_feed( 'json', 'json_feed_render_feed' );
+	add_feed( 'json', 'do_feed_json' );
 }
-function json_feed_render_feed() {
-	load_template( dirname( __FILE__ ) . '/feed-template.php' );
+function do_feed_json( $for_comments ) {
+	if ( $for_comments ) {
+		load_template( dirname( __FILE__ ) . '/feed-json-comments.php' );
+	} else {
+
+		load_template( dirname( __FILE__ ) . '/feed-json.php' );
+	}
 }
 
 add_filter( 'feed_content_type', 'json_feed_content_type', 10, 2 );
@@ -50,3 +55,5 @@ function json_feed_websub( $feeds ) {
 	$feeds[] = get_feed_link( 'json' );
 	return $feeds;
 }
+
+require_once( dirname( __FILE__ ) . '/feed-json-functions.php' );

@@ -3,7 +3,9 @@
 	<description>JSONFeed for WordPress Standards</description>
 
 	<file>./jsonfeed-wp.php</file>
-	<file>./feed-template.php</file>
+	<file>./feed-json.php</file>
+	<file>./feed-json-comments.php</file>
+	<file>./feed-json-functions.php</file>
 	<rule ref="PHPCompatibility"/>
 	<config name="testVersion" value="5.4-"/>
 	<rule ref="WordPress-Core" />	
