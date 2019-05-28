@@ -7,7 +7,7 @@
 	<rule ref="PHPCompatibility"/>
 	<config name="testVersion" value="5.4-"/>
 	<rule ref="WordPress-Core" />	
-	<config name="minimum_supported_wp_version" value="4.0"/>
+	<config name="minimum_supported_wp_version" value="4.9"/>
 	<rule ref="WordPress.Files.FileName" />
 	<rule ref="WordPress-Extra"/>
 	<rule ref="WordPress.WP.I18n"/>

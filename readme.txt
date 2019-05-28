@@ -1,8 +1,8 @@
 === JSON Feed (jsonfeed.org) ===
 Contributors: mantonr, redsweater, dshanske
 Tags: jsonfeed, json, feed, feeds
-Requires at least: 4.0
-Tested up to: 4.9.8
+Requires at least: 4.9
+Tested up to: 5.2
 Requires PHP: 5.4
 Stable tag: 1.2.0
 License: GPL-2.0+
