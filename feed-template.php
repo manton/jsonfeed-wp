@@ -11,7 +11,7 @@ function get_attachment_json_info() {
 	if ( post_password_required() ) {
 		return null;
 	}
-
+	$return = array();
 	foreach ( (array) get_post_custom() as $key => $val ) {
 		if ( 'enclosure' === $key ) {
 			foreach ( (array) $val as $enc ) {
@@ -21,7 +21,7 @@ function get_attachment_json_info() {
 				$t    = preg_split( '/[ \t]/', trim( $enclosure[2] ) );
 				$type = $t[0];
 
-				return array(
+				$return[] = array(
 					'url'           => trim( $enclosure[0] ),
 					'mime_type'     => $type,
 					'size_in_bytes' => (int) $enclosure[1],
@@ -29,6 +29,7 @@ function get_attachment_json_info() {
 			}
 		}
 	}
+	return $return;
 }
 
 function get_link_from_json_feed( $link ) {
@@ -92,7 +93,7 @@ while ( have_posts() ) {
 	$feed_item = array_filter( $feed_item );
 
 	$attachment = get_attachment_json_info();
-	if ( null !== $attachment ) {
+	if ( ! empty( $attachment ) ) {
 		$feed_item['attachments'] = array(
 			$attachment,
 		);
