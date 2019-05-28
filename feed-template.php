@@ -64,17 +64,34 @@ function json_get_merged_tags( $post_id = null ) {
 	return $return;
 }
 
+function get_the_json_excerpt_feed() {
+	$output = get_the_excerpt();
+	/**
+	 * Filters the post excerpt for a feed.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param string $output The current post excerpt.
+	 */
+	return apply_filters( 'the_excerpt_rss', $output );
+}
+
 $feed_items = array();
 
 while ( have_posts() ) {
 	the_post();
+	if ( 1 === (int) get_option( 'rss_use_excerpt' ) ) {
+		$content = get_the_json_excerpt_feed();
+	} else {
+		$content = get_the_content_feed( 'json' );
+	}
 
 	$feed_item = array(
 		'id'             => get_permalink(),
 		'url'            => get_permalink(),
 		'title'          => html_entity_decode( get_the_title() ),
-		'content_html'   => get_the_content_feed( 'json' ),
-		'content_text'   => wp_strip_all_tags( get_the_content_feed( 'json' ) ),
+		'content_html'   => $content,
+		'content_text'   => wp_strip_all_tags( $content ),
 		'date_published' => get_the_date( 'Y-m-d\TH:i:sP' ),
 		'date_modified'  => get_the_modified_date( 'Y-m-d\TH:i:sP' ),
 		'author'         => array(
@@ -85,6 +102,7 @@ while ( have_posts() ) {
 		'image'          => get_the_post_thumbnail_url( null, 'full' ), // If there is a set featured image
 		'tags'           => json_get_merged_tags(), // Tags is a merge of the category and the tags names
 	);
+
 	// Only add custom excerpts not generated ones
 	if ( has_excerpt() ) {
 		$feed_item['summary'] = get_the_excerpt();
