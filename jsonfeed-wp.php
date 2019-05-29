@@ -56,4 +56,4 @@ function json_feed_websub( $feeds ) {
 	return $feeds;
 }
 
-require_once( dirname( __FILE__ ) . '/feed-json-functions.php' );
+require_once dirname( __FILE__ ) . '/feed-json-functions.php';
