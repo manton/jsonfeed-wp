@@ -4,15 +4,15 @@ Tags: jsonfeed, json, feed, feeds
 Requires at least: 4.9
 Tested up to: 5.2
 Requires PHP: 5.4
-Stable tag: 1.2.0
+Stable tag: 1.3.0
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Adds a feed of recent posts in JSON Feed format.
+Adds feeds in JSON Feed format.
 
 == Description ==
 
-Adds a `/feed/json` URL to your WordPress site.
+Adds a JSON Feed to your WordPress site by adding `/feed/json` to any URL.
 
 The JSON Feed format is a pragmatic syndication format, like RSS and Atom, but with one big difference: it's JSON instead of XML. Learn more at [jsonfeed.org](http://jsonfeed.org/).
 
@@ -41,7 +41,18 @@ function wp_custom_json_feed_fields( $feed_item, $post ){
 add_filter( 'json_feed_item', 'wp_custom_json_feed_fields', 10, 2);
 ```
 
+= Can I write information to my posts? =
+
+This is a syndication format, which means it only represents your posts and comments as feed elements. This is read only, similar to RSS or Atom. It is not an API.
+
 == Changelog ==
+
+= 1.3.0 =
+* Add comments template
+* JSONFeed icon now part of repo
+* Allow for multiple attachments
+* Respect summary setting
+* Add support for extra feeds in header
 
 = 1.2.0 =
 * dshanske added as a contributor/maintainer
