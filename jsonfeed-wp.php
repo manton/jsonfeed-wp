@@ -3,7 +3,7 @@
 Plugin Name: JSON Feed
 Plugin URI: https://github.com/manton/jsonfeed-wp/
 Description: Adds a feed of recent posts in JSON Feed format.
-Version: 1.2.0
+Version: 1.3.0
 Author: Manton Reece and Daniel Jalkut
 Text Domain: jsonfeed
 License: GPL2.0+
@@ -22,10 +22,15 @@ function json_feed_setup_rewrite() {
 // Register the json feed rewrite rules
 add_action( 'init', 'json_feed_setup_feed' );
 function json_feed_setup_feed() {
-	add_feed( 'json', 'json_feed_render_feed' );
+	add_feed( 'json', 'do_feed_json' );
 }
-function json_feed_render_feed() {
-	load_template( dirname( __FILE__ ) . '/feed-template.php' );
+function do_feed_json( $for_comments ) {
+	if ( $for_comments ) {
+		load_template( dirname( __FILE__ ) . '/feed-json-comments.php' );
+	} else {
+
+		load_template( dirname( __FILE__ ) . '/feed-json.php' );
+	}
 }
 
 add_filter( 'feed_content_type', 'json_feed_content_type', 10, 2 );
@@ -39,14 +44,95 @@ function json_feed_content_type( $content_type, $type ) {
 add_action( 'wp_head', 'json_feed_link' );
 function json_feed_link() {
 	printf(
-		'<link rel="alternate" type="application/json" title="%s &raquo; JSON Feed" href="%s" />',
+		'<link rel="alternate" type="application/json" title="%s &raquo; JSON Feed" href="%s" />' . PHP_EOL,
 		esc_attr( get_bloginfo( 'name' ) ),
 		esc_url( get_feed_link( 'json' ) )
 	);
 }
+
+/**
+ * Display the links to the extra feeds such as category feeds.
+ *
+ *
+ * @param array $args Optional arguments.
+ */
+function json_feed_links_extra( $args = array() ) {
+	$defaults = array(
+		/* translators: Separator between blog name and feed type in feed links */
+		'separator'     => _x( '&raquo;', 'feed link', 'jsonfeed' ),
+		/* translators: 1: blog name, 2: separator(raquo), 3: post title */
+		'singletitle'   => __( '%1$s %2$s %3$s Comments Feed', 'jsonfeed' ),
+		/* translators: 1: blog name, 2: separator(raquo), 3: category name */
+		'cattitle'      => __( '%1$s %2$s %3$s Category Feed', 'jsonfeed' ),
+		/* translators: 1: blog name, 2: separator(raquo), 3: tag name */
+		'tagtitle'      => __( '%1$s %2$s %3$s Tag Feed', 'jsonfeed' ),
+		/* translators: 1: blog name, 2: separator(raquo), 3: term name, 4: taxonomy singular name */
+		'taxtitle'      => __( '%1$s %2$s %3$s %4$s Feed', 'jsonfeed' ),
+		/* translators: 1: blog name, 2: separator(raquo), 3: author name  */
+		'authortitle'   => __( '%1$s %2$s Posts by %3$s Feed', 'jsonfeed' ),
+		/* translators: 1: blog name, 2: separator(raquo), 3: search phrase */
+		'searchtitle'   => __( '%1$s %2$s Search Results for &#8220;%3$s&#8221; Feed', 'jsonfeed' ),
+		/* translators: 1: blog name, 2: separator(raquo), 3: post type name */
+		'posttypetitle' => __( '%1$s %2$s %3$s Feed', 'jsonfeed' ),
+	);
+	$args     = wp_parse_args( $args, $defaults );
+	if ( is_singular() ) {
+		$id   = 0;
+		$post = get_post( $id );
+		if ( comments_open() || pings_open() || $post->comment_count > 0 ) {
+			$title = sprintf( $args['singletitle'], get_bloginfo( 'name' ), $args['separator'], the_title_attribute( array( 'echo' => false ) ) );
+			$href  = get_post_comments_feed_link( $post->ID, 'json' );
+		}
+	} elseif ( is_post_type_archive() ) {
+		$post_type = get_query_var( 'post_type' );
+		if ( is_array( $post_type ) ) {
+			$post_type = reset( $post_type );
+		}
+		$post_type_obj = get_post_type_object( $post_type );
+		$title         = sprintf( $args['posttypetitle'], get_bloginfo( 'name' ), $args['separator'], $post_type_obj->labels->name );
+		$href          = get_post_type_archive_feed_link( $post_type_obj->name, 'json' );
+	} elseif ( is_category() ) {
+		$term = get_queried_object();
+		if ( $term ) {
+			$title = sprintf( $args['cattitle'], get_bloginfo( 'name' ), $args['separator'], $term->name );
+			$href  = get_category_feed_link( $term->term_id, 'json' );
+		}
+	} elseif ( is_tag() ) {
+		$term = get_queried_object();
+		if ( $term ) {
+			$title = sprintf( $args['tagtitle'], get_bloginfo( 'name' ), $args['separator'], $term->name );
+			$href  = get_tag_feed_link( $term->term_id, 'json' );
+		}
+	} elseif ( is_tax() ) {
+		$term  = get_queried_object();
+		$tax   = get_taxonomy( $term->taxonomy );
+		$title = sprintf( $args['taxtitle'], get_bloginfo( 'name' ), $args['separator'], $term->name, $tax->labels->singular_name );
+		$href  = get_term_feed_link( $term->term_id, $term->taxonomy, 'json' );
+	} elseif ( is_author() ) {
+		$author_id = intval( get_query_var( 'author' ) );
+		$title     = sprintf( $args['authortitle'], get_bloginfo( 'name' ), $args['separator'], get_the_author_meta( 'display_name', $author_id ) );
+		$href      = get_author_feed_link( $author_id, 'json' );
+	} elseif ( is_search() ) {
+		$title = sprintf( $args['searchtitle'], get_bloginfo( 'name' ), $args['separator'], get_search_query( false ) );
+		$href  = get_search_feed_link( '', 'json' );
+	} elseif ( is_post_type_archive() ) {
+		$title         = sprintf( $args['posttypetitle'], get_bloginfo( 'name' ), $args['separator'], post_type_archive_title( '', false ) );
+		$post_type_obj = get_queried_object();
+		if ( $post_type_obj ) {
+			$href = get_post_type_archive_feed_link( $post_type_obj->name, 'json' );
+		}
+	}
+	if ( isset( $title ) && isset( $href ) ) {
+		printf( '<link rel="alternate" type="%s" title="%s" href="%s" />', esc_attr( feed_content_type( 'json' ) ), esc_attr( $title ), esc_url( $href ) );
+		echo PHP_EOL;
+	}
+}
+add_filter( 'wp_head', 'json_feed_links_extra' );
 
 add_filter( 'pubsubhubbub_feed_urls', 'json_feed_websub' );
 function json_feed_websub( $feeds ) {
 	$feeds[] = get_feed_link( 'json' );
 	return $feeds;
 }
+
+require_once dirname( __FILE__ ) . '/feed-json-functions.php';
