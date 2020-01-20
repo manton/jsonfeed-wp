@@ -6,7 +6,7 @@
 PLUGINSLUG='jsonfeed'
 SVNPATH="/tmp/$PLUGINSLUG"
 SVNURL="https://plugins.svn.wordpress.org/$PLUGINSLUG"
-MAINFILE="$PLUGINSLUG.php"
+MAINFILE="$PLUGINSLUG-wp.php"
 default_svnuser=""
 
 echo "Checking version in main plugin file matches version in readme.txt file..."
