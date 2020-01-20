@@ -46,6 +46,11 @@ This is a syndication format, which means it only represents your posts and comm
 ## Changelog 
 
 
+### 1.3.1 
+* Fix attachment array
+* Replace custom function with backcompat of function introduced into Core
+
+
 ### 1.3.0 
 * Add comments template
 * JSONFeed icon now part of repo
