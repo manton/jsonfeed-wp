@@ -112,7 +112,7 @@ function get_json_feed_item() {
 	}
 
 	$feed_item = array(
-		'id'             => get_permalink(),
+		'id'             => get_post_field('guid'),
 		'url'            => get_permalink(),
 		'title'          => html_entity_decode( get_the_title() ),
 		'content_html'   => $content,
