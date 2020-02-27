@@ -36,7 +36,7 @@ function do_feed_json( $for_comments ) {
 add_filter( 'feed_content_type', 'json_feed_content_type', 10, 2 );
 function json_feed_content_type( $content_type, $type ) {
 	if ( 'json' === $type ) {
-		return 'application/json';
+		return 'application/feed+json';
 	}
 	return $content_type;
 }
@@ -44,7 +44,7 @@ function json_feed_content_type( $content_type, $type ) {
 add_action( 'wp_head', 'json_feed_link' );
 function json_feed_link() {
 	printf(
-		'<link rel="alternate" type="application/json" title="%s &raquo; JSON Feed" href="%s" />' . PHP_EOL,
+		'<link rel="alternate" type="application/feed+json" title="%s &raquo; JSON Feed" href="%s" />' . PHP_EOL,
 		esc_attr( get_bloginfo( 'name' ) ),
 		esc_url( get_feed_link( 'json' ) )
 	);
