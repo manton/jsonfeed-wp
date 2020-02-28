@@ -3,7 +3,7 @@
 
 if ( ! function_exists( 'get_self_link' ) ) {
 	function get_self_link() {
-		$host = @parse_url( home_url() );
+		$host = @wp_parse_url( home_url() );
 		return set_url_scheme( 'http://' . $host['host'] . wp_unslash( $_SERVER['REQUEST_URI'] ) );
 	}
 }
@@ -52,12 +52,13 @@ function get_link_from_json_feed( $link ) {
 
 function get_json_feed_data() {
 	$return = array(
-		'version'       => 'https://jsonfeed.org/version/1',
+		'version'       => 'https://jsonfeed.org/version/1.1',
 		// translators: 1. get_self_link URL
 		'user_comment'  => sprintf( __( 'This feed allows you to read the posts from this site in any feed reader that supports the JSON Feed format. To add this feed to your reader, copy the following URL -- %1$s -- and add it your reader.', 'jsonfeed' ), get_self_link() ),
 		'home_page_url' => get_link_from_json_feed( get_self_link() ),
 		'feed_url'      => get_self_link(),
-		'title'         => get_bloginfo( 'name' ),
+		'language'      => get_bloginfo( 'language' ),
+		'title'         => get_wp_title_rss(),
 		'description'   => get_bloginfo( 'description' ),
 		'icon'          => get_site_icon_url(),
 	);
@@ -91,7 +92,7 @@ function get_json_comment_feed_item() {
 		'content_html'   => $content,
 		'content_text'   => wp_strip_all_tags( $content ),
 		'date_published' => get_comment_date( 'Y-m-d\TH:i:sP' ),
-		'author'         => get_json_comment_author(),
+		'authors'        => array( get_json_comment_author() ),
 	);
 
 	if ( ! is_singular() ) {
@@ -112,14 +113,14 @@ function get_json_feed_item() {
 	}
 
 	$feed_item = array(
-		'id'             => get_permalink(),
+		'id'             => get_the_guid(),
 		'url'            => get_permalink(),
-		'title'          => html_entity_decode( get_the_title() ),
+		'title'          => html_entity_decode( get_the_title_rss() ),
 		'content_html'   => $content,
 		'content_text'   => wp_strip_all_tags( $content ),
 		'date_published' => get_the_date( 'Y-m-d\TH:i:sP' ),
 		'date_modified'  => get_the_modified_date( 'Y-m-d\TH:i:sP' ),
-		'author'         => get_json_item_author(),
+		'authors'        => array( get_json_item_author() ),
 		'image'          => get_the_post_thumbnail_url( null, 'full' ), // If there is a set featured image
 		'tags'           => json_get_merged_tags(), // Tags is a merge of the category and the tags names
 	);

@@ -46,6 +46,12 @@ This is a syndication format, which means it only represents your posts and comm
 ## Changelog 
 
 
+### 1.4.0 
+* Switch to using GUID for the ID
+* Update to the JSONFeed 1.1 standard
+* Use the RSS versions of title functions to allow these filters to be used
+
+
 ### 1.3.1 
 * Fix attachment array
 * Replace custom function with backcompat of function introduced into Core
