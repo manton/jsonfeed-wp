@@ -46,6 +46,9 @@ This is a syndication format, which means it only represents your posts and comm
 ## Changelog 
 
 
+### 1.4.1
+* Added author field back for compatibility with JSON Feed 1.0.
+
 ### 1.4.0 
 * Switch to using GUID for the ID
 * Update to the JSONFeed 1.1 standard

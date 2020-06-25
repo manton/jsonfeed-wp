@@ -93,6 +93,7 @@ function get_json_comment_feed_item() {
 		'content_text'   => wp_strip_all_tags( $content ),
 		'date_published' => get_comment_date( 'Y-m-d\TH:i:sP' ),
 		'authors'        => array( get_json_comment_author() ),
+		'author'         => get_json_comment_author(),
 	);
 
 	if ( ! is_singular() ) {
@@ -121,6 +122,7 @@ function get_json_feed_item() {
 		'date_published' => get_the_date( 'Y-m-d\TH:i:sP' ),
 		'date_modified'  => get_the_modified_date( 'Y-m-d\TH:i:sP' ),
 		'authors'        => array( get_json_item_author() ),
+		'author'         => get_json_item_author(),
 		'image'          => get_the_post_thumbnail_url( null, 'full' ), // If there is a set featured image
 		'tags'           => json_get_merged_tags(), // Tags is a merge of the category and the tags names
 	);
