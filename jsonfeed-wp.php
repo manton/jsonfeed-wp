@@ -130,7 +130,7 @@ function json_feed_links_extra( $args = array() ) {
 add_filter( 'wp_head', 'json_feed_links_extra' );
 
 /**
- * Add json as "supported feed type" for the WebSub implementation.
+ * Add `json` as "supported feed type" for the WebSub implementation.
  *
  *
  * @param array $feed_types The list of supported feed types.
