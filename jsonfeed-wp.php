@@ -129,10 +129,18 @@ function json_feed_links_extra( $args = array() ) {
 }
 add_filter( 'wp_head', 'json_feed_links_extra' );
 
-add_filter( 'pubsubhubbub_feed_urls', 'json_feed_websub' );
-function json_feed_websub( $feeds ) {
-	$feeds[] = get_feed_link( 'json' );
-	return $feeds;
+/**
+ * Add json as "supported feed type" for the WebSub implementation.
+ *
+ *
+ * @param array $feed_types The list of supported feed types.
+ *
+ * @return array $feed_types The filtered list of supported feed types.
+ */
+function json_feed_websub( $feed_types ) {
+	$feed_types[] = 'json';
+	return $feed_types;
 }
+add_filter( 'pubsubhubbub_supported_feed_types', 'json_feed_websub' );
 
 require_once dirname( __FILE__ ) . '/feed-json-functions.php';
