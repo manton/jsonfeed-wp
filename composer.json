@@ -1,19 +1,25 @@
 {
     "require": {
-	"php": ">=5.4.0",
+	"php": ">=5.6.0",
 	"composer/installers": "~1.0"
     },
     "require-dev": {
-        "dealerdirect/phpcodesniffer-composer-installer": "^0.4.3",
+        "dealerdirect/phpcodesniffer-composer-installer": "*",
 	"squizlabs/php_codesniffer": "*",
         "phpcompatibility/php-compatibility": "*",
         "wp-coding-standards/wpcs": "*",
         "wpreadme2markdown/wp2md": "*",
-	"phpcompatibility/phpcompatibility-wp": "^1.0"
+        "phpcompatibility/phpcompatibility-wp": "*",
+        "php-parallel-lint/php-parallel-lint": "^1.2",
+        "sebastian/phpcpd": "^3.0 || ^5.0 || ^6.0"
     },
     "prefer-stable" : true,
     "scripts": {
-        "lint": "phpcs",
+	"lint:phpcpd": "./vendor/bin/phpcpd --fuzzy --exclude .git --exclude vendor .",
+        "lint:wpcs": "./vendor/bin/phpcs -s --runtime-set ignore_warnings_on_exit 1",
+        "lint:wpcs-fix": "./vendor/bin/phpcbf",
+	"lint": "./vendor/bin/phpcs -n -q",
+	"lint:php": "@php ./vendor/bin/parallel-lint --exclude .git --exclude vendor .",
 	"install-codestandards": [
 		"Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"
 	],
