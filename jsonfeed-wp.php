@@ -25,6 +25,8 @@ function json_feed_setup_feed() {
 	add_feed( 'json', 'do_feed_json' );
 }
 function do_feed_json( $for_comments ) {
+	header( 'Access-Control-Allow-Origin: *' );
+
 	if ( $for_comments ) {
 		load_template( dirname( __FILE__ ) . '/feed-json-comments.php' );
 	} else {
