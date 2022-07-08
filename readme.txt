@@ -2,7 +2,7 @@
 Contributors: mantonr, redsweater, dshanske
 Tags: jsonfeed, json, feed, feeds
 Requires at least: 4.9
-Tested up to: 5.8
+Tested up to: 6.0
 Requires PHP: 5.4
 Stable tag: 1.4.2
 License: GPL-2.0+
