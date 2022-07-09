@@ -24,14 +24,14 @@ JSON is simpler to read and write, and it’s less prone to bugs.
 
 Yes you can! There is a filter, `json_feed_item`, that allows you to modify the items in the feed just before they're inserted into the feed itself. For example, if you want to add a link to a post author's archive page to the respective item in the feed, you can use the following code:
 
-`
+```php
 function wp_custom_json_feed_fields( $feed_item, $post ){
     $feed_item['author']['archive_link'] =  get_author_posts_url( $post->post_author );
 
     return $feed_item;
 }
 add_filter( 'json_feed_item', 'wp_custom_json_feed_fields', 10, 2);
-`
+```
 
 ### Can I write information to my posts?
 
