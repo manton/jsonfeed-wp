@@ -1,4 +1,15 @@
 {
+   "name": "manton/jsonfeed-wp",
+     "description": "JSON Feed for WordPress",
+     "type": "wordpress-plugin",
+     "license": "GPLv2 or later",
+     "support": {
+	     "issues": "https://github.com/manton/jsonfeed-wp/issues",
+	     "source": "https://github.com/manton/jsonfeed-wp"
+     },
+     "extra": {
+		"installer-name": "jsonfeed"
+     },
     "require": {
 	"php": ">=5.6.0",
 	"composer/installers": "~1.0"
