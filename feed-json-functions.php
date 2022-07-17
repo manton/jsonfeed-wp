@@ -49,12 +49,27 @@ function get_link_from_json_feed( $link ) {
 	return $link;
 }
 
+function get_json_feed_next_url() {
+	global $paged, $wp_query;
+	if ( ! $max_page ) {
+		$max_page = $wp_query->max_num_pages;
+	}
+
+	$nextpage = ( ! $paged ) ? 2 : (int) $paged + 1;
+
+	if ( ! is_single() && ( $nextpage <= $max_page ) ) {
+		return add_query_arg( 'paged', $nextpage, get_self_link() );
+	}
+	return '';
+}
+
 
 function get_json_feed_data() {
 	$return = array(
 		'version'       => 'https://jsonfeed.org/version/1.1',
 		// translators: 1. get_self_link URL
 		'user_comment'  => sprintf( __( 'This feed allows you to read the posts from this site in any feed reader that supports the JSON Feed format. To add this feed to your reader, copy the following URL -- %1$s -- and add it your reader.', 'jsonfeed' ), get_self_link() ),
+		'next_url'      => get_json_feed_next_url(),
 		'home_page_url' => get_link_from_json_feed( get_self_link() ),
 		'feed_url'      => get_self_link(),
 		'language'      => get_bloginfo( 'language' ),
