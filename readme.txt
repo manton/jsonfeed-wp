@@ -2,9 +2,9 @@
 Contributors: mantonr, redsweater, dshanske
 Tags: jsonfeed, json, feed, feeds
 Requires at least: 4.9
-Tested up to: 6.0
+Tested up to: 6.2
 Requires PHP: 5.4
-Stable tag: 1.4.3
+Stable tag: 1.4.4
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,6 +46,9 @@ add_filter( 'json_feed_item', 'wp_custom_json_feed_fields', 10, 2);
 This is a syndication format, which means it only represents your posts and comments as feed elements. This is read only, similar to RSS or Atom. It is not an API.
 
 == Changelog ==
+
+= 1.4.4 =
+* Fix declaration error
 
 = 1.4.3 = 
 * Add next_url

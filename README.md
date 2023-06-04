@@ -39,6 +39,10 @@ This is a syndication format, which means it only represents your posts and comm
 
 ## Changelog
 
+### 1.4.4
+
+* Fix declaration error
+
 ### 1.4.3
 
 * Add next_url
