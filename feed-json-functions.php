@@ -51,9 +51,7 @@ function get_link_from_json_feed( $link ) {
 
 function get_json_feed_next_url() {
 	global $paged, $wp_query;
-	if ( ! isset($max_page) || ! $max_page ) {
-		$max_page = $wp_query->max_num_pages;
-	}
+	$max_page = $wp_query->max_num_pages;
 
 	$nextpage = ( ! $paged ) ? 2 : (int) $paged + 1;
 
