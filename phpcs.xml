@@ -7,7 +7,7 @@
 	<file>./feed-json-comments.php</file>
 	<file>./feed-json-functions.php</file>
 	<rule ref="PHPCompatibility"/>
-	<config name="testVersion" value="5.4-"/>
+	<config name="testVersion" value="5.6-"/>
 	<rule ref="WordPress-Core" />	
 	<config name="minimum_supported_wp_version" value="4.9"/>
 	<rule ref="WordPress.Files.FileName" />
