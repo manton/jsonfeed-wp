@@ -39,6 +39,12 @@ This is a syndication format, which means it only represents your posts and comm
 
 ## Changelog
 
+### 1.4.5
+
+* Sanity check on $max_page
+* Add filter `jsonfeed_comments_feed_enable`, which if set to false will disable the comments feed header.
+* Add mime type for jsonfeed to filter for W3C Cache Plugin per GitHub issue 67. 
+
 ### 1.4.4
 
 * Fix declaration error

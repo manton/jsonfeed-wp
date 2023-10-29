@@ -2,9 +2,9 @@
 Contributors: mantonr, redsweater, dshanske
 Tags: jsonfeed, json, feed, feeds
 Requires at least: 4.9
-Tested up to: 6.2
-Requires PHP: 5.4
-Stable tag: 1.4.4
+Tested up to: 6.3
+Requires PHP: 5.6
+Stable tag: 1.4.5
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,6 +46,11 @@ add_filter( 'json_feed_item', 'wp_custom_json_feed_fields', 10, 2);
 This is a syndication format, which means it only represents your posts and comments as feed elements. This is read only, similar to RSS or Atom. It is not an API.
 
 == Changelog ==
+
+= 1.4.5 =
+* Sanity check on $max_page
+* Add filter `jsonfeed_comments_feed_enable`, which if set to false will disable the comments feed header.
+* Add mime type for jsonfeed to filter for W3C Cache Plugin per GitHub issue 67. 
 
 = 1.4.4 =
 * Fix declaration error

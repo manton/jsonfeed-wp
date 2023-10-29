@@ -3,7 +3,7 @@
 Plugin Name: JSON Feed
 Plugin URI: https://github.com/manton/jsonfeed-wp/
 Description: Adds a feed of recent posts in JSON Feed format.
-Version: 1.4.4
+Version: 1.4.5
 Author: Manton Reece and Daniel Jalkut
 Text Domain: jsonfeed
 License: GPL2.0+
@@ -28,10 +28,10 @@ function do_feed_json( $for_comments ) {
 	header( 'Access-Control-Allow-Origin: *' );
 
 	if ( $for_comments ) {
-		load_template( dirname( __FILE__ ) . '/feed-json-comments.php' );
+		load_template( __DIR__ . '/feed-json-comments.php' );
 	} else {
 
-		load_template( dirname( __FILE__ ) . '/feed-json.php' );
+		load_template( __DIR__ . '/feed-json.php' );
 	}
 }
 
@@ -42,6 +42,14 @@ function json_feed_content_type( $content_type, $type ) {
 	}
 	return $content_type;
 }
+
+
+function json_feed_w3tc_is_cacheable_content_type( $types ) {
+	$types[] = 'application/feed+json';
+	return array_unique( $types );
+}
+
+add_filter( 'w3tc_is_cacheable_content_type', 'json_feed_w3tc_is_cacheable_content_type' );
 
 add_action( 'wp_head', 'json_feed_link' );
 function json_feed_link() {
@@ -79,9 +87,10 @@ function json_feed_links_extra( $args = array() ) {
 	);
 	$args     = wp_parse_args( $args, $defaults );
 	if ( is_singular() ) {
-		$id   = 0;
-		$post = get_post( $id );
-		if ( comments_open() || pings_open() || $post->comment_count > 0 ) {
+		$id       = 0;
+		$post     = get_post( $id );
+		$comments = apply_filters( 'jsonfeed_comments_feed_enable', true );
+		if ( $comments && ( comments_open() || pings_open() || $post->comment_count > 0 ) ) {
 			$title = sprintf( $args['singletitle'], get_bloginfo( 'name' ), $args['separator'], the_title_attribute( array( 'echo' => false ) ) );
 			$href  = get_post_comments_feed_link( $post->ID, 'json' );
 		}
@@ -145,4 +154,4 @@ function json_feed_websub( $feed_types ) {
 }
 add_filter( 'pubsubhubbub_supported_feed_types', 'json_feed_websub' );
 
-require_once dirname( __FILE__ ) . '/feed-json-functions.php';
+require_once __DIR__ . '/feed-json-functions.php';
