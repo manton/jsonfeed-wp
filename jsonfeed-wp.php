@@ -43,6 +43,14 @@ function json_feed_content_type( $content_type, $type ) {
 	return $content_type;
 }
 
+
+function json_feed_w3tc_is_cacheable_content_type( $types ) {
+	$types[] = 'application/feed+json';
+	return array_unique( $types );
+}
+
+add_filter( 'w3tc_is_cacheable_content_type', 'json_feed_w3tc_is_cacheable_content_type' );
+
 add_action( 'wp_head', 'json_feed_link' );
 function json_feed_link() {
 	printf(
