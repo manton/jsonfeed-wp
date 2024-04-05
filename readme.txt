@@ -2,7 +2,7 @@
 Contributors: mantonr, redsweater, dshanske
 Tags: jsonfeed, json, feed, feeds
 Requires at least: 4.9
-Tested up to: 6.3
+Tested up to: 6.5
 Requires PHP: 5.6
 Stable tag: 1.4.5
 License: GPL-2.0+
@@ -50,12 +50,12 @@ This is a syndication format, which means it only represents your posts and comm
 = 1.4.5 =
 * Sanity check on $max_page
 * Add filter `jsonfeed_comments_feed_enable`, which if set to false will disable the comments feed header.
-* Add mime type for jsonfeed to filter for W3C Cache Plugin per GitHub issue 67. 
+* Add mime type for jsonfeed to filter for W3C Cache Plugin per GitHub issue 67.
 
 = 1.4.4 =
 * Fix declaration error
 
-= 1.4.3 = 
+= 1.4.3 =
 * Add next_url
 * Add CORS header
 
